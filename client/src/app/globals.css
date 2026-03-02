@@ -1,26 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ── Design tokens ─────────────────────────────── */
+:root {
+  --bg:        #f1f1f1;
+  --bg-alt:    #e8e8e8;
+  --surface:   #ffffff;
+  --border:    #d4d4d4;
+  --text:      #2b2b2b;
+  --text-2:    #7a7a7a;
+  --text-3:    #b0b0b0;
+  --accent:    #e05c00;          /* orange — the only color */
+  --accent-dim: rgba(224,92,0,.12);
+}
+
+.dark {
+  --bg:        #1a1a1a;
+  --bg-alt:    #222222;
+  --surface:   #2b2b2b;
+  --border:    #383838;
+  --text:      #f1f1f1;
+  --text-2:    #9a9a9a;
+  --text-3:    #5a5a5a;
+  --accent:    #ff6b1a;
+  --accent-dim: rgba(255,107,26,.12);
+}
+
+/* ── Base ──────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
 html {
-  font-family: -apple-system, BlinkMacSystemFont, "San Francisco", sans-serif;
+  font-family: 'Barlow', sans-serif;
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
-  transition: background-color 0.5s ease, color 0.5s ease;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color .4s ease, color .4s ease;
 }
 
-
-@keyframes gradient-x {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
 }
 
-.animate-gradient-x {
-  background-size: 200% 200%;
-  animation: gradient-x 4s ease infinite;
+/* ── Typography scale ─────────────────────────── */
+.font-display {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 0.92;
 }
+
+.font-display-md {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+/* ── Rule dividers ────────────────────────────── */
+.rule { border-top: 1px solid var(--border); }
+
+/* ── Accent ───────────────────────────────────── */
+.text-accent   { color: var(--accent); }
+.bg-accent     { background-color: var(--accent); }
+.border-accent { border-color: var(--accent); }
+
+/* ── Scrollbar ────────────────────────────────── */
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── Focus ────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── Marquee ──────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 24s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }

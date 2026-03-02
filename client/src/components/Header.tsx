@@ -17,7 +17,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-4 left-1/2 transform -translate-x-1/2 w-[95%] max-w-6xl px-6 flex items-center justify-between rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-black/40 backdrop-blur-xl shadow-md z-50 transition-all duration-300 ${
+      className={`fixed top-4 left-1/2 transform -translate-x-1/2 w-[95%] max-w-6xl px-6 flex items-center justify-between rounded-lg border border-gray-200 dark:border-gray-800 bg-white/60 dark:bg-black/40 backdrop-blur-xl shadow-md z-50 transition-all duration-300 ${
         scrolled ? 'py-2' : 'py-4'
       }`}
     >
@@ -51,7 +51,7 @@ export default function Header() {
           Login
         </Link>
         <Link
-          href="/signup"
+          href="/register"
           className="px-4 py-2 rounded-full text-sm font-medium bg-black text-white dark:bg-white dark:text-black hover:scale-105 hover:opacity-90 transition-all duration-300"
         >
           Sign Up

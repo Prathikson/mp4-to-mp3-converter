@@ -1,31 +1,35 @@
-// src/components/ThemeToggle.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
 import { Sun, Moon } from 'lucide-react';
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-  }, [theme]);
+    const stored = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const pref = stored ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    setTheme(pref);
+    document.documentElement.classList.toggle('dark', pref === 'dark');
+  }, []);
 
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  const toggle = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    localStorage.setItem('theme', next);
   };
 
   return (
     <button
-      onClick={toggleTheme}
-      aria-label="Toggle Theme"
-      className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:scale-105 transition-all duration-300"
+      onClick={toggle}
+      aria-label="Toggle theme"
+      className="w-8 h-8 flex items-center justify-center transition-colors duration-150"
+      style={{ color: 'var(--text-2)' }}
+      onMouseEnter={e => (e.currentTarget.style.color = 'var(--text)')}
+      onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-2)')}
     >
-      {theme === 'dark' ? (
-        <Sun className="h-5 w-5 text-yellow-500" />
-      ) : (
-        <Moon className="h-5 w-5 text-gray-300" />
-      )}
+      {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
     </button>
   );
 }

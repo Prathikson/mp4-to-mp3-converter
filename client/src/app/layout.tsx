@@ -1,8 +1,10 @@
 // src/app/layout.tsx
-import Header from '@/components/Header';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
+
+import Header from '@/components/Header';
+import { AuthProvider } from '@/context/AuthContext';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -22,8 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.className} dark`}>
       <body className="bg-gradient-to-br from-gray-100 via-white to-gray-200 dark:from-black dark:via-zinc-900 dark:to-black text-gray-800 dark:text-white transition-colors duration-500">
-        <Header />
-        {children} {/* Render child pages (like Features, Pricing, etc.) */}
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

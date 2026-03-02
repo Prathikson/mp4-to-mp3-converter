@@ -1,127 +1,82 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Plus, Minus } from 'lucide-react';
+
+const faqs = [
+  { q: 'How does the converter work?', a: 'Upload an MP4 and our server-side FFmpeg processor extracts and converts the audio track to a high-quality MP3. No browser plugins or installs required.' },
+  { q: 'Is there a file size limit?', a: 'Standard uploads support files up to 500 MB. Most video files convert without any issues.' },
+  { q: 'Is my data safe?', a: 'Yes. All files are deleted automatically within 5 minutes of conversion. We never store, share, or analyse your content.' },
+  { q: 'Do I need to create an account?', a: 'No. The converter is fully free with no sign-up required, ever.' },
+  { q: 'Can I cancel Pro anytime?', a: 'Absolutely. Cancel from your account settings with a single click — no questions asked.' },
+];
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
 
-  const toggleAccordion = (index: number) => {
-    setOpen(open === index ? null : index);
-  };
-
   return (
-    <section id='faq' className="max-w-6xl mx-auto px-4 py-16 sm:max-w-2xl">
-      <h2 className="text-3xl font-semibold text-center text-gray-900 dark:text-white">
-        Frequently Asked Questions
-      </h2>
+    <section id="faq" className="px-6 py-24 max-w-6xl mx-auto">
+      <div className="rule mb-12" />
 
-      <div className="mt-8 space-y-6">
-        {/* FAQ 1 */}
-        <div>
-          <div
-            onClick={() => toggleAccordion(0)}
-            className="flex items-center justify-between cursor-pointer text-xl font-semibold text-gray-800 dark:text-gray-100 transition-all duration-200"
-          >
-            <p>How does the converter work?</p>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              {open === 0 ? (
-                <X className="w-5 h-5 text-gray-800 dark:text-white" />
-              ) : (
-                <ChevronDown className="w-5 h-5 text-gray-800 dark:text-white" />
-              )}
-            </motion.div>
-          </div>
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-16 gap-4">
+        <motion.p
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          className="text-xs font-600 uppercase tracking-[0.2em]" style={{ color: 'var(--text-2)' }}
+        >
+          FAQ
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          transition={{ delay: 0.05 }}
+          className="font-display text-[clamp(2.5rem,6vw,5rem)]" style={{ color: 'var(--text)' }}
+        >
+          Common<br />
+          <span style={{ color: 'var(--accent)' }}>Questions.</span>
+        </motion.h2>
+      </div>
 
+      <div>
+        {faqs.map((faq, i) => (
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className={`text-gray-600 dark:text-gray-400 mt-2 transition-all duration-300 ${
-              open === 0 ? 'max-h-[500px] overflow-hidden' : 'max-h-0 overflow-hidden'
-            }`}
+            key={i}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.04 }}
+            style={{ borderTop: '1px solid var(--border)' }}
           >
-            <p>
-              Simply upload your MP4 file, and the system will convert it to MP3. No sign-up needed for basic usage.
-              It's fast and easy to use!
-            </p>
-          </motion.div>
-        </div>
-
-        {/* FAQ 2 */}
-        <div>
-          <div
-            onClick={() => toggleAccordion(1)}
-            className="flex items-center justify-between cursor-pointer text-xl font-semibold text-gray-800 dark:text-gray-100 transition-all duration-200"
-          >
-            <p>Do I need to create an account?</p>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
+            <button
+              onClick={() => setOpen(open === i ? null : i)}
+              className="w-full py-6 flex items-center justify-between text-left gap-4 group"
             >
-              {open === 1 ? (
-                <X className="w-5 h-5 text-gray-800 dark:text-white" />
-              ) : (
-                <ChevronDown className="w-5 h-5 text-gray-800 dark:text-white" />
+              <span className="text-base font-500 transition-colors duration-150"
+                style={{ color: open === i ? 'var(--accent)' : 'var(--text)' }}>
+                {faq.q}
+              </span>
+              <span className="shrink-0 transition-colors duration-150" style={{ color: 'var(--text-2)' }}>
+                {open === i ? <Minus size={14} /> : <Plus size={14} />}
+              </span>
+            </button>
+
+            <AnimatePresence initial={false}>
+              {open === i && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
+                  className="overflow-hidden"
+                >
+                  <p className="pb-6 text-sm font-300 leading-relaxed max-w-xl" style={{ color: 'var(--text-2)' }}>
+                    {faq.a}
+                  </p>
+                </motion.div>
               )}
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className={`text-gray-600 dark:text-gray-400 mt-2 transition-all duration-300 ${
-              open === 1 ? 'max-h-[500px] overflow-hidden' : 'max-h-0 overflow-hidden'
-            }`}
-          >
-            <p>
-              No. You can use the converter for free up to 3 times a week without signing up. For unlimited use, just
-              sign up for Pro. It's that easy!
-            </p>
+            </AnimatePresence>
           </motion.div>
-        </div>
-
-        {/* FAQ 3 */}
-        <div>
-          <div
-            onClick={() => toggleAccordion(2)}
-            className="flex items-center justify-between cursor-pointer text-xl font-semibold text-gray-800 dark:text-gray-100 transition-all duration-200"
-          >
-            <p>Is my data safe?</p>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            >
-              {open === 2 ? (
-                <X className="w-5 h-5 text-gray-800 dark:text-white" />
-              ) : (
-                <ChevronDown className="w-5 h-5 text-gray-800 dark:text-white" />
-              )}
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className={`text-gray-600 dark:text-gray-400 mt-2 transition-all duration-300 ${
-              open === 2 ? 'max-h-[500px] overflow-hidden' : 'max-h-0 overflow-hidden'
-            }`}
-          >
-            <p>
-              Absolutely! Your privacy is important to us. All uploaded files are deleted after conversion, so you can
-              rest easy.
-            </p>
-          </motion.div>
-        </div>
+        ))}
+        <div className="rule" />
       </div>
     </section>
   );

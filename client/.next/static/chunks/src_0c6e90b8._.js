@@ -476,7 +476,7 @@ const FileConversion = ({ onUpgradePrompt })=>{
             const fetchConversionCount = {
                 "FileConversion.useEffect.fetchConversionCount": async ()=>{
                     try {
-                        const res = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get('http://localhost:5000/conversionCount');
+                        const res = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].get('https://mp4-to-mp3-backend-hu8o.onrender.com/conversionCount');
                         setTotalConversionCount(res.data.totalCount);
                     } catch (err) {
                         console.error('Failed to fetch conversion count:', err);
@@ -516,7 +516,7 @@ const FileConversion = ({ onUpgradePrompt })=>{
         const formData = new FormData();
         formData.append('file', file);
         try {
-            const res = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post('http://localhost:5000/convert', formData, {
+            const res = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].post('https://mp4-to-mp3-backend-hu8o.onrender.com/convert', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -571,7 +571,7 @@ const FileConversion = ({ onUpgradePrompt })=>{
                         ...getInputProps()
                     }, void 0, false, {
                         fileName: "[project]/src/components/FileConversion.tsx",
-                        lineNumber: 131,
+                        lineNumber: 132,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -579,13 +579,13 @@ const FileConversion = ({ onUpgradePrompt })=>{
                         children: "Drag & drop your MP4 here or click to select"
                     }, void 0, false, {
                         fileName: "[project]/src/components/FileConversion.tsx",
-                        lineNumber: 132,
+                        lineNumber: 133,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/FileConversion.tsx",
-                lineNumber: 126,
+                lineNumber: 127,
                 columnNumber: 7
             }, this),
             file && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].p, {
@@ -602,13 +602,13 @@ const FileConversion = ({ onUpgradePrompt })=>{
                         children: file.name
                     }, void 0, false, {
                         fileName: "[project]/src/components/FileConversion.tsx",
-                        lineNumber: 143,
+                        lineNumber: 144,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/FileConversion.tsx",
-                lineNumber: 138,
+                lineNumber: 139,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -628,19 +628,19 @@ const FileConversion = ({ onUpgradePrompt })=>{
                             size: 20
                         }, void 0, false, {
                             fileName: "[project]/src/components/FileConversion.tsx",
-                            lineNumber: 155,
+                            lineNumber: 156,
                             columnNumber: 13
                         }, this),
                         "Convert"
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/FileConversion.tsx",
-                    lineNumber: 149,
+                    lineNumber: 150,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/FileConversion.tsx",
-                lineNumber: 147,
+                lineNumber: 148,
                 columnNumber: 7
             }, this),
             isConverting && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -665,19 +665,19 @@ const FileConversion = ({ onUpgradePrompt })=>{
                             size: 20
                         }, void 0, false, {
                             fileName: "[project]/src/components/FileConversion.tsx",
-                            lineNumber: 171,
+                            lineNumber: 172,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/FileConversion.tsx",
-                        lineNumber: 167,
+                        lineNumber: 168,
                         columnNumber: 11
                     }, this),
                     "Converting..."
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/FileConversion.tsx",
-                lineNumber: 162,
+                lineNumber: 163,
                 columnNumber: 9
             }, this),
             isConverted && downloadUrl && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].button, {
@@ -707,19 +707,19 @@ const FileConversion = ({ onUpgradePrompt })=>{
                             size: 20
                         }, void 0, false, {
                             fileName: "[project]/src/components/FileConversion.tsx",
-                            lineNumber: 188,
+                            lineNumber: 189,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/FileConversion.tsx",
-                        lineNumber: 184,
+                        lineNumber: 185,
                         columnNumber: 11
                     }, this),
                     "Download MP3"
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/FileConversion.tsx",
-                lineNumber: 178,
+                lineNumber: 179,
                 columnNumber: 9
             }, this),
             showUpgradePrompt && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -738,7 +738,7 @@ const FileConversion = ({ onUpgradePrompt })=>{
                         children: "You’ve hit 3 free conversions today."
                     }, void 0, false, {
                         fileName: "[project]/src/components/FileConversion.tsx",
-                        lineNumber: 200,
+                        lineNumber: 201,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -747,19 +747,19 @@ const FileConversion = ({ onUpgradePrompt })=>{
                         children: "Upgrade to Pro"
                     }, void 0, false, {
                         fileName: "[project]/src/components/FileConversion.tsx",
-                        lineNumber: 201,
+                        lineNumber: 202,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/FileConversion.tsx",
-                lineNumber: 195,
+                lineNumber: 196,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/FileConversion.tsx",
-        lineNumber: 125,
+        lineNumber: 126,
         columnNumber: 5
     }, this);
 };

@@ -1,77 +1,111 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CheckCircle } from 'lucide-react';
 
-const pricingTiers = [
+const tiers = [
   {
-    title: 'Free',
-    features: ['3 conversions per week', 'No sign-up required', 'Basic conversion speed'],
-    price: 'Free',
-    badge: null,
-    bg: 'bg-white/80 dark:bg-zinc-900/50',
-    cta: 'Try for Free',
+    name: 'Free',
+    price: '$0',
+    note: 'forever',
+    features: ['Unlimited conversions', 'No account required', 'Files deleted in 5 min', 'Standard speed'],
+    cta: 'Start Now',
+    accent: false,
   },
   {
-    title: 'Pro',
-    features: ['Unlimited conversions', 'Faster processing', 'Priority support'],
-    price: '$10.99/month',
-    badge: 'Best Value',
-    bg: 'bg-white dark:bg-zinc-800',
+    name: 'Pro',
+    price: '$10.99',
+    note: '/ month',
+    features: ['Everything in Free', 'Priority processing', 'Early feature access', 'Priority support'],
     cta: 'Upgrade to Pro',
+    accent: true,
   },
 ];
 
 export default function Pricing() {
   return (
-    <section id='pricing' className="max-w-6xl mx-auto px-4 py-16">
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-4xl font-bold text-center text-gray-900 dark:text-white"
-      >
-        Pricing
-      </motion.h2>
+    <section id="pricing" className="px-6 py-24 max-w-6xl mx-auto">
+      <div className="rule mb-12" />
 
-      <div className="mt-16 grid md:grid-cols-2 gap-12">
-        {pricingTiers.map((tier) => (
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-16 gap-4">
+        <motion.p
+          initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+          className="text-xs font-600 uppercase tracking-[0.2em]" style={{ color: 'var(--text-2)' }}
+        >
+          Pricing
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+          transition={{ delay: 0.05 }}
+          className="font-display text-[clamp(2.5rem,6vw,5rem)]" style={{ color: 'var(--text)' }}
+        >
+          Simple.<br />
+          <span style={{ color: 'var(--accent)' }}>Honest.</span>
+        </motion.h2>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        {tiers.map((t, i) => (
           <motion.div
-            key={tier.title}
-            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-            className={`relative rounded-3xl shadow-xl p-8 ${tier.bg} backdrop-blur-lg border border-gray-200 dark:border-gray-700 flex flex-col justify-between`}
+            key={t.name}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.08 }}
+            className="p-8 flex flex-col justify-between"
+            style={{
+              backgroundColor: t.accent ? 'var(--text)' : 'var(--surface)',
+              border: '1px solid var(--border)',
+            }}
           >
-            {tier.badge && (
-              <div className="absolute top-4 right-4 bg-gradient-to-r from-fuchsia-500 to-cyan-500 text-white px-3 py-1 text-xs font-semibold rounded-full animate-pulse">
-                {tier.badge}
-              </div>
-            )}
+            {/* Top */}
             <div>
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
-                {tier.title}
-              </h3>
-              <p className="text-xl font-bold text-gray-800 dark:text-gray-300 mb-6">
-                {tier.price}
-              </p>
+              <div className="flex items-end justify-between mb-8">
+                <p className="text-xs font-600 uppercase tracking-[0.15em]"
+                  style={{ color: t.accent ? 'rgba(241,241,241,0.5)' : 'var(--text-2)' }}>
+                  {t.name}
+                </p>
+                {t.accent && (
+                  <span className="text-xs font-700 uppercase tracking-widest px-2 py-1"
+                    style={{ backgroundColor: 'var(--accent)', color: '#fff' }}>
+                    Best Value
+                  </span>
+                )}
+              </div>
 
-              <ul className="space-y-3 text-left mb-6">
-                {tier.features.map((feature) => (
-                  <motion.li
-                    key={feature}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2, duration: 0.4 }}
-                    className="flex items-center text-gray-700 dark:text-gray-300"
-                  >
-                    <CheckCircle className="w-5 h-5 text-green-500 mr-2" />
-                    {feature}
-                  </motion.li>
+              <div className="mb-8">
+                <span className="font-display text-[4rem]"
+                  style={{ color: t.accent ? 'var(--bg)' : 'var(--text)' }}>
+                  {t.price}
+                </span>
+                <span className="text-sm ml-2 font-300"
+                  style={{ color: t.accent ? 'rgba(241,241,241,0.5)' : 'var(--text-2)' }}>
+                  {t.note}
+                </span>
+              </div>
+
+              <ul className="space-y-3 mb-10">
+                {t.features.map(f => (
+                  <li key={f} className="flex items-center gap-3 text-sm font-300"
+                    style={{ color: t.accent ? 'rgba(241,241,241,0.8)' : 'var(--text)' }}>
+                    <span className="w-1 h-1 rounded-full shrink-0"
+                      style={{ backgroundColor: t.accent ? 'var(--accent)' : 'var(--surface)' }} />
+                    {f}
+                  </li>
                 ))}
               </ul>
             </div>
 
-            <button className="mt-auto bg-[#1b1b1b] text-white dark:bg-white dark:text-[#1b1b1b] font-semibold py-2 px-4 rounded-xl shadow hover:opacity-90 transition">
-              {tier.cta}
+            {/* CTA */}
+            <button
+              className="w-full py-3.5 text-xs font-700 uppercase tracking-[0.15em] transition-all duration-150"
+              style={t.accent
+                ? { backgroundColor: 'var(--accent)', color: '#fff' }
+                : { backgroundColor: 'var(--text)', color: 'var(--bg)' }
+              }
+              onMouseEnter={e => { if (!t.accent) (e.currentTarget as HTMLElement).style.backgroundColor = 'var(--accent)'; }}
+              onMouseLeave={e => { if (!t.accent) (e.currentTarget as HTMLElement).style.backgroundColor = 'var(--text)'; }}
+            >
+              {t.cta}
             </button>
           </motion.div>
         ))}

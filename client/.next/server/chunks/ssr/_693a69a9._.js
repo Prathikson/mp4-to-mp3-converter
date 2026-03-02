@@ -22,7 +22,6 @@ __turbopack_context__.n(__turbopack_context__.i("[project]/src/app/layout.tsx [a
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-// In your main page (probably in `page.tsx`):
 __turbopack_context__.s({
     "default": (()=>DonateShare)
 });

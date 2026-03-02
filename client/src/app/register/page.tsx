@@ -1,0 +1,144 @@
+'use client';
+
+import { useState } from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+import { getFirestore, setDoc, doc } from 'firebase/firestore';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Eye, EyeOff, ArrowRight } from 'lucide-react';
+
+export default function RegisterPage() {
+  const router = useRouter();
+  const [email, setEmail]       = useState('');
+  const [password, setPassword] = useState('');
+  const [showPw, setShowPw]     = useState(false);
+  const [error, setError]       = useState('');
+  const [loading, setLoading]   = useState(false);
+
+  const strength = password.length === 0 ? 0 : password.length < 6 ? 1 : password.length < 10 ? 2 : 3;
+  const strengthLabel = ['', 'Weak', 'Good', 'Strong'];
+  const strengthColor = ['', 'var(--accent)', '#f59e0b', '#22c55e'];
+
+  const handle = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true); setError('');
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      const db = getFirestore();
+      await setDoc(doc(db, 'users', auth.currentUser!.uid), {
+        email, plan: 'free', createdAt: new Date().toISOString(),
+      });
+      router.push('/profile');
+    } catch (err: any) {
+      if (err.code === 'auth/email-already-in-use') setError('An account with this email already exists.');
+      else if (err.code === 'auth/weak-password') setError('Password must be at least 6 characters.');
+      else setError('Something went wrong. Please try again.');
+    } finally { setLoading(false); }
+  };
+
+  return (
+    <main className="min-h-screen flex items-center justify-center px-6 pt-20" style={{ backgroundColor: 'var(--bg)' }}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}
+        className="w-full max-w-md"
+      >
+        <Link href="/" className="block font-display text-3xl mb-12" style={{ color: 'var(--text)' }}>
+          MP4<span style={{ color: 'var(--accent)' }}>→</span>MP3
+        </Link>
+
+        <h1 className="font-display text-[clamp(2.5rem,6vw,4rem)] mb-10" style={{ color: 'var(--text)' }}>
+          Create<br />Account.
+        </h1>
+
+        {error && (
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            className="text-sm mb-6 px-4 py-3"
+            style={{ backgroundColor: 'var(--accent-dim)', color: 'var(--accent)', border: '1px solid var(--accent)' }}>
+            {error}
+          </motion.p>
+        )}
+
+        <form onSubmit={handle} className="space-y-4">
+          <div>
+            <label className="block text-xs font-600 uppercase tracking-[0.15em] mb-2" style={{ color: 'var(--text-2)' }}>
+              Email
+            </label>
+            <input type="email" required placeholder="you@example.com"
+              value={email} onChange={e => setEmail(e.target.value)}
+              className="w-full px-4 py-3.5 text-sm outline-none transition-colors duration-150"
+              style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' }}
+              onFocus={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--text)'; }}
+              onBlur={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)'; }}
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-600 uppercase tracking-[0.15em] mb-2" style={{ color: 'var(--text-2)' }}>
+              Password
+            </label>
+            <div className="relative">
+              <input type={showPw ? 'text' : 'password'} required placeholder="••••••••"
+                value={password} onChange={e => setPassword(e.target.value)}
+                className="w-full px-4 py-3.5 pr-12 text-sm outline-none transition-colors duration-150"
+                style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' }}
+                onFocus={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--text)'; }}
+                onBlur={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--border)'; }}
+              />
+              <button type="button" onClick={() => setShowPw(!showPw)}
+                className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-2)' }}>
+                {showPw ? <EyeOff size={15} /> : <Eye size={15} />}
+              </button>
+            </div>
+
+            {/* Strength bar */}
+            {password.length > 0 && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-2 space-y-1">
+                <div className="flex gap-1">
+                  {[1, 2, 3].map(level => (
+                    <div key={level} className="h-0.5 flex-1 transition-all duration-300"
+                      style={{ backgroundColor: strength >= level ? strengthColor[strength] : 'var(--border)' }} />
+                  ))}
+                </div>
+                <p className="text-xs uppercase tracking-widest" style={{ color: 'var(--text-3)' }}>
+                  {strengthLabel[strength]}
+                </p>
+              </motion.div>
+            )}
+          </div>
+
+          <button type="submit" disabled={loading}
+            className="w-full py-4 text-sm font-700 uppercase tracking-[0.15em] flex items-center justify-between px-6 mt-2 transition-colors duration-150 disabled:opacity-50"
+            style={{ backgroundColor: 'var(--text)', color: 'var(--bg)' }}
+            onMouseEnter={e => { if (!loading) (e.currentTarget as HTMLElement).style.backgroundColor = 'var(--accent)'; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = 'var(--text)'; }}
+          >
+            <span>{loading ? 'Creating account…' : 'Create Account'}</span>
+            {!loading && <ArrowRight size={16} />}
+          </button>
+        </form>
+
+        {/* Perks */}
+        <div className="mt-6 flex gap-6" style={{ color: 'var(--text-3)' }}>
+          {['Free to join', 'No limits', 'Cancel anytime'].map(p => (
+            <span key={p} className="flex items-center gap-1.5 text-xs uppercase tracking-widest font-500">
+              <span className="w-1 h-1 rounded-full" style={{ backgroundColor: 'var(--accent)' }} />
+              {p}
+            </span>
+          ))}
+        </div>
+
+        <p className="mt-8 text-sm" style={{ color: 'var(--text-2)' }}>
+          Already have an account?{' '}
+          <Link href="/login" className="font-600 transition-colors duration-150"
+            style={{ color: 'var(--text)' }}
+            onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'var(--text)')}>
+            Sign in →
+          </Link>
+        </p>
+      </motion.div>
+    </main>
+  );
+}

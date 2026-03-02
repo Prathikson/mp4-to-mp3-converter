@@ -1,0 +1,12 @@
+{
+  "extends": ["next/core-web-vitals", "eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "react/no-unescaped-entities": "off",  // Disable unescaped entities rule
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]  // Disable unused vars rule
+  }
+}

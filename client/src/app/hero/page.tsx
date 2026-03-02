@@ -1,30 +1,55 @@
 'use client';
 
-import { useState } from 'react';
-import FileConversion from '@/components/FileConversion'; // Import the reusable FileConversion component
+import { motion } from 'framer-motion';
+import FileConversion from '@/components/FileConversion';
+
+const fade = (delay = 0) => ({
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] },
+});
 
 export default function HeroSection() {
-  const [showUpgradePrompt, setShowUpgradePrompt] = useState<boolean>(false);
-
-  const handleUpgradePrompt = () => {
-    setShowUpgradePrompt(true); // Trigger the upgrade prompt logic when needed
-  };
-
   return (
-    <section id='hero' className="min-w-screen mt-28 px-6 py-6">
-      {/* Hero Content */}
-      <div className="flex flex-col items-center justify-center space-y-6 text-center z-10">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-gray-900 dark:text-white">
-          Convert MP4 to MP3 with Ease
-        </h1>
-        <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400">
-          Fast, secure, and high-quality MP4 to MP3 conversion without the need to sign up. Simple, seamless, and user-friendly.
+    <section id="hero" className="pt-32 pb-24 px-6 max-w-6xl mx-auto">
+
+      {/* Eyebrow */}
+      <motion.p {...fade(0)}
+        className="text-xs font-600 uppercase tracking-[0.2em] mb-6"
+        style={{ color: 'var(--text-2)' }}
+      >
+        Free audio converter
+      </motion.p>
+
+      {/* Giant headline */}
+      <motion.h1 {...fade(0.06)}
+        className="font-display text-[clamp(4rem,12vw,10rem)] mb-4 leading-none"
+        style={{ color: 'var(--text)' }}
+      >
+        MP4<span style={{ color: 'var(--accent)' }}>→</span><br />
+        MP3.
+      </motion.h1>
+
+      {/* Subheading */}
+      <motion.div {...fade(0.12)}
+        className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-16"
+      >
+        <p className="text-lg font-300 max-w-sm leading-relaxed" style={{ color: 'var(--text-2)' }}>
+          Drop your video. Get your audio.<br />
+          Fast, private, completely free — forever.
         </p>
+        <p className="text-xs font-500 uppercase tracking-widest" style={{ color: 'var(--text-3)' }}>
+          Files deleted after 5 min
+        </p>
+      </motion.div>
 
-        {/* FileConversion Component */}
-        <FileConversion onUpgradePrompt={handleUpgradePrompt} />
+      {/* Horizontal rule */}
+      <motion.div {...fade(0.16)} className="rule mb-10" />
 
-      </div>
+      {/* Converter */}
+      <motion.div {...fade(0.2)}>
+        <FileConversion />
+      </motion.div>
     </section>
   );
 }
